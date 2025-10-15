@@ -1,10 +1,9 @@
 Integrantes del equipo: 
 - Mauricio Emilio Monroy González - A01029647
 - Luis Emilio Veledíaz Flores - A0 
-- Hector Lugo Gabino - A0 
+- Hector Lugo Gabino - A01029811
 
 Contribuciones a código
-1. ParteX - Contribuidor
+1. Mau Monrroy Parte1 - Funcion de Manacher y KnuttMorris
 2. ParteX - Contribuidor
-3. ParteX - Contribuidor
-4. ParteX - Contribuidor
+3. Hector Parte3 - Funcion de getLongestsubString(), y ayuda en la parte 1
