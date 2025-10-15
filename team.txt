@@ -5,5 +5,5 @@ Integrantes del equipo:
 
 Contribuciones a código
 1. Mau Monrroy Parte1 - Funcion de Manacher y KnuttMorris
-2. ParteX - Contribuidor
-3. Hector Parte3 - Funcion de getLongestsubString(), y ayuda en la parte 1
+2. Luis Emilio Parte 2 - Función de getLongestPalindrome y corrección de líneas en main para parte 1 y 2.
+3. Hector Parte3 - Función de getLongestsubString(), y ayuda en la parte 1.
