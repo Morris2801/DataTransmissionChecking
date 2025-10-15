@@ -138,6 +138,7 @@ vector<int> arregloSufijos(string T){ // De la clase de Victor, este es mío
     return posiciones;
 }
 
+
 // programacion dinamica para encontrar el substring comun mas largo
 // Libro p.237 - 240  Aplicacion de tecnicas de diseno
 // adaptado para devuelva dos valores
@@ -170,7 +171,7 @@ pair<int,int> longestCommonSubString(string A, string B){
             LCS[0][j] =0;
         }
     }
-    for (int i = 1; i<n; i++){
+    for (int i = 1; i<n; i++){ // O(n*m) for anidados
         for(int j=1; j<m; j++){
             if(A[i] == B[j]){
 
