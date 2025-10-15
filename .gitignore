@@ -1,0 +1,21 @@
+
+# Archivos de VS Code
+.vscode/
+*.code-workspace
+
+# Archivos de Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+.vs/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*~
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
