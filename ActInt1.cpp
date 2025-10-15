@@ -10,21 +10,22 @@ using namespace std;
 //KnuthMorrisPratt O(n + m) para encontrar patrón P en texto T ----Geeks4Geeks y yo
 int KnuthMorrisPratt(string T, string P){
     int n = T.length(), m = P.length();
+    if(m == 0) return 0; // Si el patron es vacio, se encuentra en la posicion 0
+
     // Preprocesamiento
     vector<int> lps(m, 0);  // Longest Proper Prefix which is also Suffix
-    int j = 0;
-    for (int i = 1; i < m; i++) {
-        while (j > 0 && P[i] != P[j]) {
-            j = lps[j - 1];
+    for(int i = 1, len = 0; i < m; ){
+        if(P[i] == P[len]){
+            lps[i++] = ++len;
+        } else if(len){
+            len = lps[len-1];
+        } else {
+            lps[i++] = 0;
         }
-        if (P[i] == P[j]) {
-            j++;
-        }
-        lps[i] = j;
     }
     // AlgoritmoFull
     int i = 0; // index para  T
-    j = 0;     // index para P
+    int j = 0;     // index para P
     while (i < n) {
         if (P[j] == T[i]) {
             i++;
@@ -32,8 +33,6 @@ int KnuthMorrisPratt(string T, string P){
         }
         if (j == m) {
             // Patrón encontrado en índice (i - j)
-            cout << "Patrón encontrado en índice " << (i - j) << endl;
-            j = lps[j - 1]; // Continuar buscando más ocurrencias
             return i - j;   // Devolver índice de la primera ocurrencia
         }
         else if (i < n && P[j] != T[i]) {
@@ -139,6 +138,58 @@ vector<int> arregloSufijos(string T){ // De la clase de Victor, este es mío
     return posiciones;
 }
 
+// programacion dinamica para encontrar el substring comun mas largo
+// Libro p.237 - 240  Aplicacion de tecnicas de diseno
+// adaptado para devuelva dos valores
+pair<int,int> longestCommonSubString(string A, string B){
+    //incializar una matriz LCS de tamano, longitud del string 1 por la longitud del string 2 una matriz de filas A y columnas B
+    int n = A.size();
+    int m = B.size();
+    vector<vector<int>> LCS(n, vector<int>(m, 0));
+    int maxLen = 0;
+    int endPos;
+
+    for(int i=0; i<n; i++){
+        // preguntamos el caracter del string A en la posicion i es igual al caracter del string B en 0
+        if(A[i] == B[0]){
+            // si, si entonces asignamos 1 en la posicion i,0 de la matriz, marcanos primera columna
+            LCS[i][0] = 1;
+            maxLen = 1;
+        }
+        else{
+            LCS[i][0] = 0;
+        }
+    }
+    for (int j =0; j<m; j++){
+        if(A[0]==B[j]){
+            //marcamos la primera fila
+            LCS[0][j] =1;
+            maxLen = max(maxLen,1);
+        }
+        else{
+            LCS[0][j] =0;
+        }
+    }
+    for (int i = 1; i<n; i++){
+        for(int j=1; j<m; j++){
+            if(A[i] == B[j]){
+
+                // si los caracteres coinciden extendemos el subString
+                LCS[i][j] = LCS[i-1][j-1] + 1; //usamos la diagornal ya calculada y como esa digaonal ya tiene un valor le sumanos 1 a la posicon actual
+                if(LCS[i][j] >maxLen ){
+                    maxLen = LCS[i][j]; //actualizamos el maximo
+                    endPos = i; //guardamos donde termina el primer string A
+                }
+            }
+            else LCS [i][j] = 0;
+        }
+    }
+
+    //caulcar posiciones
+    int startPos = endPos -maxLen+1;
+    return  {startPos+1 , endPos+1};
+}
+
 int main (){
     //-------------Extracción de texto desde archivos
     ifstream file;
@@ -180,10 +231,6 @@ int main (){
     cout << mcode3 << endl;
 
     //--------------------Resultados
-
-    //Parte 1: Deteccion de codigo malicioso en la transmision
-    // reviar si existe algun tipo de los 3 codigos malisiosos en las 2 transmisiones
-    
     cout << "parte 1" << endl; 
     //Tómenla por buena que no me aventé unos ifs asquerosos jajaja
     // corregí lo de que el ternario KMP devuelve -1 si no se encontró el patrón - LE
@@ -215,6 +262,8 @@ int main (){
 
     cout << "parte 3" << endl; //llamen a mi función mágica (chance la tengan que adaptar)
     // posInit posFin (substring común más largo entre trnsmssn)
-
+    
+    pair<int, int> lcs = longestCommonSubString(transmission1, transmission2);
+    cout << lcs.first << " " << lcs.second <<endl;
     return 0;
 }
