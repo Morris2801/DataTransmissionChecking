@@ -203,19 +203,23 @@ int main (){
     cout << mcode3 << endl;
 
     //--------------------Resultados
+
+    //Parte 1: Deteccion de codigo malicioso en la transmision
+    // reviar si existe algun tipo de los 3 codigos malisiosos en las 2 transmisiones
+    
     cout << "parte 1" << endl; 
     //Tómenla por buena que no me aventé unos ifs asquerosos jajaja
-    bool res1 = KnuthMorrisPratt(transmission1, mcode1) ? "true" : "false";
+    bool res1 = KnuthMorrisPratt(transmission1, mcode1) ? true : false;
     cout << res1 << endl;
-    bool res2 = KnuthMorrisPratt(transmission1, mcode2) ? "true" : "false";
+    bool res2 = KnuthMorrisPratt(transmission1, mcode2) ? true : false;
     cout << res2 << endl;
-    bool res3 = KnuthMorrisPratt(transmission1, mcode3) ? "true" : "false";
+    bool res3 = KnuthMorrisPratt(transmission1, mcode3) ? true : false;
     cout << res3 << endl;
-    bool res4 = KnuthMorrisPratt(transmission2, mcode1) ? "true" : "false";
+    bool res4 = KnuthMorrisPratt(transmission2, mcode1) ? true : false;
     cout << res4 << endl;
-    bool res5 = KnuthMorrisPratt(transmission2, mcode2) ? "true" : "false";
+    bool res5 = KnuthMorrisPratt(transmission2, mcode2) ? true : false;
     cout << res5 << endl;
-    bool res6 = KnuthMorrisPratt(transmission2, mcode3) ? "true" : "false";
+    bool res6 = KnuthMorrisPratt(transmission2, mcode3) ? true : false;
     cout << res6 << endl;
 
     cout << "parte 2" << endl; //llamen a Manacher modificado 
