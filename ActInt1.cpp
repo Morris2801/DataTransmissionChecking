@@ -102,21 +102,17 @@ public:
         }
     }
 
-    // returns length of longest palindrome centered 
-    // at 'cen' in original string
-    // 'odd' = 1 → check for odd-length, 'odd' = 0 → even-length
-    int getLongest(int cen, int odd) {
-        
-        // map original index to transformed string index
-        int pos = 2 * cen + 2 + !odd;
-        return p[pos];
-    }
-
-    // checks if s[l..r] is a palindrome in O(1)
-    bool check(int l, int r) {
-        int len = r - l + 1;
-        int cen = (l + r) / 2;
-        return len <= getLongest(cen, len % 2);
+    // funcion agregada para obtener las posiciones del palindromo mas largo - LE
+    pair<int, int> getLongestPalindrome() {
+        int maxLen = 0, centerIndex = 0;
+        for (int i = 1; i < (int)p.size() - 1; i++) {
+            if (p[i] > maxLen) {
+                maxLen = p[i];
+                centerIndex = i;
+            }
+        }
+        int start = (centerIndex - maxLen) / 2; // traducir a indice en el string original
+        return {start + 1, start + maxLen}; // devolver posiciones
     }
 };
 
@@ -128,17 +124,7 @@ vector<int> arregloSufijos(string T){ // De la clase de Victor, este es mío
     for (int i = n; i >= 0; i--){
         sufijos.push_back(T.substr(i, n-i));
     }
-    /*
-    for (int i = 0; i < sufijos.size(); i++){
-        cout << sufijos[i] << endl;
-    }
-    */
     sort(sufijos.begin(), sufijos.end()); //O(n log n) en teoría
-    /*
-    for (int i = 0; i < sufijos.size(); i++){
-        cout << sufijos[i] << endl;
-    }
-    */
     vector<int> posiciones; 
     for (int i = 0; i < sufijos.size(); i++){
         posiciones.push_back(n - sufijos[i].length() +1);
@@ -153,12 +139,6 @@ vector<int> arregloSufijos(string T){ // De la clase de Victor, este es mío
     return posiciones;
 }
 
-
-
-
-
-
-
 int main (){
     //-------------Extracción de texto desde archivos
     ifstream file;
@@ -171,7 +151,6 @@ int main (){
     file.close();  
     cout << transmission1 << endl;
     file.open("transmission2.txt");
-    string line;
     string transmission2 = "";
     while(getline(file, line)){ //O(n)
         transmission2 += line;
@@ -179,7 +158,6 @@ int main (){
     file.close();  
     cout << transmission2 << endl;
     file.open("mcode1.txt");
-    string line;
     string mcode1 = "";
     while(getline(file, line)){ //O(n)
         mcode1 += line;
@@ -194,7 +172,6 @@ int main (){
     file.close();  
     cout << mcode2 << endl;
     file.open("mcode3.txt");
-    string line; 
     string mcode3 = "";
     while(getline(file, line)){ //O(n)
         mcode3 += line;
@@ -205,27 +182,35 @@ int main (){
     //--------------------Resultados
     cout << "parte 1" << endl; 
     //Tómenla por buena que no me aventé unos ifs asquerosos jajaja
-    bool res1 = KnuthMorrisPratt(transmission1, mcode1) ? "true" : "false";
-    cout << res1 << endl;
-    bool res2 = KnuthMorrisPratt(transmission1, mcode2) ? "true" : "false";
-    cout << res2 << endl;
-    bool res3 = KnuthMorrisPratt(transmission1, mcode3) ? "true" : "false";
-    cout << res3 << endl;
-    bool res4 = KnuthMorrisPratt(transmission2, mcode1) ? "true" : "false";
-    cout << res4 << endl;
-    bool res5 = KnuthMorrisPratt(transmission2, mcode2) ? "true" : "false";
-    cout << res5 << endl;
-    bool res6 = KnuthMorrisPratt(transmission2, mcode3) ? "true" : "false";
-    cout << res6 << endl;
+    // corregí lo de que el ternario KMP devuelve -1 si no se encontró el patrón - LE
+    int pos;
+    pos = KnuthMorrisPratt(transmission1, mcode1);
+    cout << ((pos >= 0) ? ("true " + to_string(pos + 1)) : "false") << endl;
+    pos = KnuthMorrisPratt(transmission1, mcode2);
+    cout << ((pos >= 0) ? ("true " + to_string(pos + 1)) : "false") << endl;
+    pos = KnuthMorrisPratt(transmission1, mcode3);
+    cout << ((pos >= 0) ? ("true " + to_string(pos + 1)) : "false") << endl;
+    pos = KnuthMorrisPratt(transmission2, mcode1);
+    cout << ((pos >= 0) ? ("true " + to_string(pos + 1)) : "false") << endl;
+    pos = KnuthMorrisPratt(transmission2, mcode2);
+    cout << ((pos >= 0) ? ("true " + to_string(pos + 1)) : "false") << endl;
+    pos = KnuthMorrisPratt(transmission2, mcode3);
+    cout << ((pos >= 0) ? ("true " + to_string(pos + 1)) : "false") << endl;
 
-    cout << "parte 2" << endl; //llamen a Manacher modificado 
-    // posicionInicial posicionFinal (trnsmssn 1)
-    // posicionInicial posicionFinal (trnsmssn 2)
+    cout << "\nparte 2" << endl; //llamen a Manacher modificado
+    // aqui ya se llamo al Manacher (no supe si por modificado era cambiar todo para que no fuera el de G4G) y llame a la func que hice del palindromo - LE
+    {
+        Manacher M1(transmission1);
+        auto pal1 = M1.getLongestPalindrome();
+        cout << pal1.first << " " << pal1.second << endl;
+
+        Manacher M2(transmission2);
+        auto pal2 = M2.getLongestPalindrome();
+        cout << pal2.first << " " << pal2.second << endl;
+    }
 
     cout << "parte 3" << endl; //llamen a mi función mágica (chance la tengan que adaptar)
     // posInit posFin (substring común más largo entre trnsmssn)
 
-    
-    
     return 0;
 }
