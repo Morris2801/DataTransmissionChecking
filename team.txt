@@ -4,6 +4,6 @@ Integrantes del equipo:
 - Hector Lugo Gabino - A01029811
 
 Contribuciones a código
-1. Mau Monrroy Parte1 - Funcion de Manacher y KnuttMorris
+1. Mau Monrroy Parte1 - Funcion de Manacher, KnuttMorrisPratt, draft de LCS, construcción de lógica general y escaneo de textos
 2. Luis Emilio Parte 2 - Función de getLongestPalindrome y corrección de líneas en main para parte 1 y 2.
 3. Hector Parte3 - Función de getLongestsubString(), y ayuda en la parte 1.
